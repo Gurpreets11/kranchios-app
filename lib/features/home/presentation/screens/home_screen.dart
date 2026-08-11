@@ -27,7 +27,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   static const _pageSize = 10;
   static final _allItems = List.generate(
     42,
-        (index) => 'Activity item ${index + 1}',
+    (index) => 'Activity item ${index + 1}',
   );
 
   late final PaginationController _paginationController;
@@ -51,8 +51,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final matches = _query.isBlank
         ? _allItems
         : _allItems.where((item) {
-      return item.toLowerCase().contains(_query.toLowerCase());
-    }).toList();
+            return item.toLowerCase().contains(_query.toLowerCase());
+          }).toList();
 
     // "Newest" here just means the generated order vs. reversed — in a
     // real app this would be a `sortBy` parameter on the repository call.
