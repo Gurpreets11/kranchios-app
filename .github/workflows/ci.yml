@@ -28,3 +28,29 @@ jobs:
 
       - name: Run tests
         run: flutter test --coverage
+
+
+  build-release-apk:
+    # Runs only after analyze-and-test passes, and actually builds a real
+    # release APK. Catches things `flutter analyze`/`flutter test` can't:
+    # release-mode-only compilation issues (R8/ProGuard, tree-shaking,
+    # missing platform config). It would NOT have caught the
+    # AppExitGuard/AndroidManifest.xml issue specifically — a missing
+    # optional manifest attribute doesn't fail the build, it just changes
+    # runtime behavior. Catching that class of issue needs an actual
+    # instrumented/on-device test, which is a bigger addition than this.
+    needs: analyze-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.38.5'
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build release APK
+        run: flutter build apk --release

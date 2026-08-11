@@ -56,7 +56,7 @@ class StarterApp extends ConsumerWidget {
                 ).copyWith(textScaler: TextScaler.linear(fontScale.scale)),
                 child: AppIdleTimeoutGuard(
                   enabled: featureFlags.enableIdleTimeout,
-                  timeout: const Duration(minutes: 15),
+                  timeout: const Duration(minutes: 10),
                   onTimeout: () =>
                       ref.read(authControllerProvider.notifier).logout(),
                   child: child ?? const SizedBox.shrink(),

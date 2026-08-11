@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../auth/presentation/providers/auth_providers.dart';
 
-/// The home screen — the first screen shown after login.
+/// The home screen — the first screen shown after login, and the
+/// app's effective navigation root (back here exits the app rather
+/// than popping further — see [AppExitGuard] below).
 ///
 /// Demonstrates [AppSearchField], [AppDropdownTrigger] (paired with
 /// [AppDialogs.showActionSheet] for a "Sort by" control), and
@@ -25,7 +27,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   static const _pageSize = 10;
   static final _allItems = List.generate(
     42,
-    (index) => 'Activity item ${index + 1}',
+        (index) => 'Activity item ${index + 1}',
   );
 
   late final PaginationController _paginationController;
@@ -49,8 +51,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final matches = _query.isBlank
         ? _allItems
         : _allItems.where((item) {
-            return item.toLowerCase().contains(_query.toLowerCase());
-          }).toList();
+      return item.toLowerCase().contains(_query.toLowerCase());
+    }).toList();
 
     // "Newest" here just means the generated order vs. reversed — in a
     // real app this would be a `sortBy` parameter on the repository call.
@@ -105,55 +107,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final authState = ref.watch(authControllerProvider);
     final visibleItems = _filteredItems.take(_visibleCount).toList();
 
-    return Padding(
-      padding: EdgeInsets.all(config.spacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Welcome, ${authState.user?.name ?? ''}',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          SizedBox(height: config.spacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: AppSearchField(
-                  hintText: 'Search activity',
-                  onChanged: _onSearchChanged,
+    return AppExitGuard(
+      behavior: AppExitBehavior.confirmDialog,
+      child: Padding(
+        padding: EdgeInsets.all(config.spacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Welcome, ${authState.user?.name ?? ''}',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            SizedBox(height: config.spacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: AppSearchField(
+                    hintText: 'Search activity',
+                    onChanged: _onSearchChanged,
+                  ),
                 ),
-              ),
-              SizedBox(width: config.spacing.sm),
-              AppDropdownTrigger(
-                label: _sortNewestFirst ? 'Newest' : 'Oldest',
-                onTap: () => _showSortSheet(context),
-              ),
-            ],
-          ),
-          SizedBox(height: config.spacing.md),
-          Expanded(
-            child: AppPaginatedListView<String>(
-              items: visibleItems,
-              controller: _paginationController,
-              emptyState: const AppEmptyState(
-                title: 'No matching activity',
-                message: 'Try a different search term.',
-              ),
-              itemBuilder: (context, item) => Padding(
-                padding: EdgeInsets.only(bottom: config.spacing.sm),
-                child: AppCard(
-                  child: Row(
-                    children: [
-                      Icon(Icons.history, color: config.primary),
-                      SizedBox(width: config.spacing.sm),
-                      Expanded(child: Text(item)),
-                    ],
+                SizedBox(width: config.spacing.sm),
+                AppDropdownTrigger(
+                  label: _sortNewestFirst ? 'Newest' : 'Oldest',
+                  onTap: () => _showSortSheet(context),
+                ),
+              ],
+            ),
+            SizedBox(height: config.spacing.md),
+            Expanded(
+              child: AppPaginatedListView<String>(
+                items: visibleItems,
+                controller: _paginationController,
+                emptyState: const AppEmptyState(
+                  title: 'No matching activity',
+                  message: 'Try a different search term.',
+                ),
+                itemBuilder: (context, item) => Padding(
+                  padding: EdgeInsets.only(bottom: config.spacing.sm),
+                  child: AppCard(
+                    child: Row(
+                      children: [
+                        Icon(Icons.history, color: config.primary),
+                        SizedBox(width: config.spacing.sm),
+                        Expanded(child: Text(item)),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

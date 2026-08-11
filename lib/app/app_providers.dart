@@ -18,7 +18,7 @@ final connectivityServiceProvider = Provider<ConnectivityService>((ref) {
 final featureFlagsProvider = Provider<AppFeatureFlags>((ref) {
   return const AppFeatureFlags(
     enableIdleTimeout: true,
-    enableBiometricLock: false,
+    enableBiometricLock: true,
     enableForceUpdateCheck: true,
     enableLocalization: false,
   );
