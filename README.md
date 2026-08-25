@@ -1,4 +1,4 @@
-# flutter_starter
+# kranchios_web
 
 A GitHub template repo for bootstrapping new Flutter apps: splash → login →
 home → profile → change-password, fully wired to

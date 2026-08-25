@@ -1,12 +1,10 @@
-name: flutter_template
-description: >
-  A starter Flutter application scaffold — splash, login, profile, and
-  change-password screens wired to core_package. Meant to be used via
-  "Use this template" on GitHub, then renamed per new app.
+name: kranchios_app
+description: Kranchios application
+
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.6.0
+version: 1.0.0+1
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
