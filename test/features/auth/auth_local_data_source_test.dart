@@ -1,6 +1,6 @@
 import 'package:core_package/core_package.dart';
-import 'package:flutter_template/features/auth/data/datasources/auth_local_data_source.dart';
-import 'package:flutter_template/features/auth/domain/entities/auth_user.dart';
+import 'package:kranchios_app/features/auth/data/datasources/auth_local_data_source.dart';
+import 'package:kranchios_app/features/auth/domain/entities/auth_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// A fully in-memory fake — no platform channel involved, unlike the

@@ -1,11 +1,11 @@
 import 'package:core_package/core_package.dart';
-import 'package:flutter_template/features/auth/domain/entities/auth_user.dart';
-import 'package:flutter_template/features/auth/domain/repositories/auth_repository.dart';
-import 'package:flutter_template/features/auth/domain/usecases/change_password_use_case.dart';
-import 'package:flutter_template/features/auth/domain/usecases/login_use_case.dart';
-import 'package:flutter_template/features/auth/domain/usecases/logout_use_case.dart';
-import 'package:flutter_template/features/auth/presentation/providers/auth_controller.dart';
-import 'package:flutter_template/features/auth/presentation/providers/auth_state.dart';
+import 'package:kranchios_app/features/auth/domain/entities/auth_user.dart';
+import 'package:kranchios_app/features/auth/domain/repositories/auth_repository.dart';
+import 'package:kranchios_app/features/auth/domain/usecases/change_password_use_case.dart';
+import 'package:kranchios_app/features/auth/domain/usecases/login_use_case.dart';
+import 'package:kranchios_app/features/auth/domain/usecases/logout_use_case.dart';
+import 'package:kranchios_app/features/auth/presentation/providers/auth_controller.dart';
+import 'package:kranchios_app/features/auth/presentation/providers/auth_state.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
